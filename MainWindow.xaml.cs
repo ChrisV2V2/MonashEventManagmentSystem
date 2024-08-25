@@ -52,7 +52,7 @@ namespace WPFProg6221ICE
             eventManager.Events.Add(new Event
             {
                 EventID = 3,
-                Title = "Jiafei Inauguration",
+                Title = "President Deborah Ali Inauguration",
                 Date = DateTime.Today.AddDays(5),
                 Type = "Floptropican Event",
                 Department = "The Commonwealth of Floptropica",
@@ -80,10 +80,15 @@ namespace WPFProg6221ICE
             {
                 string selectedStatus = ((ComboBoxItem)statusComboBox.SelectedItem).Content.ToString();
 
-                // Update status asynchronously using Task.Run
+                //This line offloads the task of updating the event status to a separate thread using the Task.Run function,
+                //allowing the primary thread (our UI) to remain responsive.
+                //This is used to execute the UpdateEventStatus method on a secondary thread.
                 await Task.Run(() => UpdateEventStatus(selectedEvent, selectedStatus));
 
-                // Update UI on the main thread after status is updated
+
+                //After the status of an event has been updated in the background, the Dispatcher.Invoke is used to update the UI
+                //to refelect the changes made.
+                //This ensures that the is updated, which must be done on the primary thread 
                 Dispatcher.Invoke(() =>
                 {
                     selectedEvent.Status = selectedStatus;
