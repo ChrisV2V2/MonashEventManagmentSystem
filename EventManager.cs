@@ -16,6 +16,11 @@ namespace WPFProg6221ICE
             Events = new List<Event>();
         }
 
+        public void AddEvent(Event newEvent)
+        {
+            Events.Add(newEvent);
+        }
+
         public IEnumerable<dynamic> FilterEvents(DateTime? startDate = null, string type = null, string department = null)
         {
             var query = Events.AsQueryable();
